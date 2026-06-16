@@ -8,6 +8,7 @@ members = [
     "crates/axum-pk-config",
     "crates/axum-pk-redis",
     "crates/axum-pk",
+    "crates/axum-pk-cli",
     "examples/user-management",
 ]
 resolver = "2"
@@ -29,7 +30,7 @@ async-trait = "0.1"
 # Web framework
 axum = { version = "0.8", features = ["macros"] }
 tower = "0.5"
-tower-http = { version = "0.6", features = ["cors", "trace", "compression", "timeout"] }
+tower-http = { version = "0.6", features = ["cors", "trace", "compression-br", "timeout"] }
 
 # Serialization
 serde = { version = "1", features = ["derive"] }
