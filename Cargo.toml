@@ -10,6 +10,7 @@ members = [
     "crates/axum-pk",
     "crates/axum-pk-cli",
     "examples/user-management",
+    "examples/my-project",
 ]
 resolver = "2"
 
