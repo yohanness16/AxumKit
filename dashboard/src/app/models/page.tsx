@@ -675,7 +675,7 @@ function ModelCard({
                                 const { updateField } = useDashboardStore.getState();
                                 updateField(model.id, field.id, {
                                   name: editFieldName,
-                                  type: editFieldType,
+                                  type: editFieldType as import("@/types").FieldType,
                                   nullable: editFieldNullable,
                                   unique: editFieldUnique,
                                   indexed: editFieldIndexed,
@@ -932,7 +932,7 @@ export default function ModelsPage() {
 
   const handleAddField = useCallback(
     (modelId: string, field: { id: string; name: string; type: string; primaryKey: boolean; unique: boolean; nullable: boolean; defaultValue?: string; indexed: boolean; hidden: boolean }) => {
-      addField(modelId, field);
+      addField(modelId, { ...field, type: field.type as import("@/types").FieldType });
     },
     [addField]
   );

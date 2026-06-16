@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import PluginCard from "@/components/PluginCard";
-import useDashboardStore from "@/store/dashboard";
+import { useDashboardStore } from "@/store/dashboard";
 
 export default function PluginsPage() {
   const { plugins, togglePlugin } = useDashboardStore();

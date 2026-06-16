@@ -151,7 +151,7 @@ function getFrameworkFileTree(
               ? [
                   {
                     name: "app",
-                    type: "const" as const,
+                    type: "folder" as const,
                     children: [
                       { name: `layout.${tsxExt}`, type: "file" as const },
                       { name: `page.${tsxExt}`, type: "file" as const },
@@ -170,7 +170,7 @@ function getFrameworkFileTree(
                 ? [
                     {
                       name: "components",
-                      type: "const" as const,
+                      type: "folder" as const,
                       children: [
                         { name: `App.${framework === "vue" ? "vue" : tsxExt}`, type: "file" as const },
                         { name: `Layout.${framework === "vue" ? "vue" : tsxExt}`, type: "file" as const },
@@ -178,7 +178,7 @@ function getFrameworkFileTree(
                     },
                     {
                       name: "pages",
-                      type: "const" as const,
+                      type: "folder" as const,
                       children: [
                         { name: `Index.${framework === "vue" ? "vue" : tsxExt}`, type: "file" as const },
                       ],
@@ -188,7 +188,7 @@ function getFrameworkFileTree(
                 : [
                     {
                       name: "routes",
-                      type: "const" as const,
+                      type: "folder" as const,
                       children: [
                         { name: `+layout.svelte`, type: "file" as const },
                         { name: `+page.svelte`, type: "file" as const },
@@ -237,7 +237,7 @@ function getFrameworkFileTree(
               ? [
                   {
                     name: "store",
-                    type: "const" as const,
+                    type: "folder" as const,
                     children: [
                       { name: `index.${ext}`, type: "file" as const },
                       { name: `auth.${ext}`, type: "file" as const },
@@ -249,7 +249,7 @@ function getFrameworkFileTree(
               ? [
                   {
                     name: "store",
-                    type: "const" as const,
+                    type: "folder" as const,
                     children: [
                       { name: `index.${ext}`, type: "file" as const },
                       { name: `slices.${ext}`, type: "file" as const },
@@ -261,11 +261,11 @@ function getFrameworkFileTree(
               ? [
                   {
                     name: "components",
-                    type: "const" as const,
+                    type: "folder" as const,
                     children: [
                       {
                         name: "ui",
-                        type: "const" as const,
+                        type: "folder" as const,
                         children: [
                           { name: `button.${tsxExt}`, type: "file" as const },
                           { name: `input.${tsxExt}`, type: "file" as const },

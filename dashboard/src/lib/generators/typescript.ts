@@ -150,14 +150,15 @@ export interface PaginatedResponse<T> {
 
 export function generatePackageJson(framework: string): string {
   const deps: Record<string, string> = {
-    next: framework === "nextjs" ? "^14" : undefined,
     react: "^18",
     "react-dom": "^18",
     "@tanstack/react-query": "^5",
     typescript: "^5",
   };
 
-  const filtered = Object.fromEntries(Object.entries(deps).filter(([, v]) => v));
+  if (framework === "nextjs") {
+    deps.next = "^14";
+  }
 
   return JSON.stringify(
     {
@@ -169,7 +170,7 @@ export function generatePackageJson(framework: string): string {
         build: framework === "nextjs" ? "next build" : "vite build",
         start: framework === "nextjs" ? "next start" : "vite preview",
       },
-      dependencies: filtered,
+      dependencies: deps,
     },
     null,
     2

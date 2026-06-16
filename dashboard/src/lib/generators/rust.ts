@@ -58,6 +58,7 @@ export function generateModelCode(model: Model): string {
 export function generateHandlerCode(model: Model): string {
   const name = model.name;
   const tableName = model.tableName;
+  const singularName = tableName.replace(/s$/, "");
   const path = `/${tableName}`;
 
   return `use axum::{extract::{Path, Query, State}, Json};
@@ -91,7 +92,7 @@ pub async fn list_${tableName}(
     Json(items)
 }
 
-pub async fn get_${tableName.singular}(
+pub async fn get_${singularName}(
     State(state): State<AppState>,
     Path(id): Path<Uuid>,
 ) -> Json<Option<${name}>> {
@@ -106,7 +107,7 @@ pub async fn get_${tableName.singular}(
     Json(item)
 }
 
-pub async fn create_${tableName.singular}(
+pub async fn create_${singularName}(
     State(state): State<AppState>,
     Json(dto): Json<Create${name}Dto>,
 ) -> Json<${name}> {
@@ -114,7 +115,7 @@ pub async fn create_${tableName.singular}(
     todo!()
 }
 
-pub async fn update_${tableName.singular}(
+pub async fn update_${singularName}(
     State(state): State<AppState>,
     Path(id): Path<Uuid>,
     Json(dto): Json<Create${name}Dto>,
@@ -123,7 +124,7 @@ pub async fn update_${tableName.singular}(
     todo!()
 }
 
-pub async fn delete_${tableName.singular}(
+pub async fn delete_${singularName}(
     State(state): State<AppState>,
     Path(id): Path<Uuid>,
 ) -> &'static str {
@@ -133,7 +134,7 @@ pub async fn delete_${tableName.singular}(
         .await
         .ok();
     "Deleted"
-}`.replace("${tableName.singular}", tableName.replace(/s$/, ""));
+}`;
 }
 
 export function generateRouterCode(models: Model[]): string {
