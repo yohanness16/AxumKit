@@ -6,12 +6,26 @@ rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 authors.workspace = true
-description = "axum-pk — part of AXUMkit"
+description = "AXUMkit — Modular, pluggable Rust backend framework"
+
+[features]
+default = ["config"]
+config = ["dep:axum-pk-config"]
+db = ["dep:axum-pk-db"]
+auth = ["dep:axum-pk-auth"]
+api = ["dep:axum-pk-api"]
+redis = ["dep:axum-pk-redis"]
+full = ["config", "db", "auth", "api", "redis"]
 
 [dependencies]
 axum-pk-core = { path = "../axum-pk-core" }
+axum-pk-config = { path = "../axum-pk-config", optional = true }
+axum-pk-db = { path = "../axum-pk-db", optional = true }
+axum-pk-auth = { path = "../axum-pk-auth", optional = true }
+axum-pk-api = { path = "../axum-pk-api", optional = true }
+axum-pk-redis = { path = "../axum-pk-redis", optional = true }
 async-trait.workspace = true
-serde.workspace = true
-thiserror.workspace = true
+axum.workspace = true
 tokio.workspace = true
 tracing.workspace = true
+anyhow.workspace = true
