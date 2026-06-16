@@ -3,11 +3,11 @@ import React from "react";
 export type StatusVariant = "active" | "inactive" | "error" | "warning" | "pending";
 
 const STATUS_STYLES: Record<StatusVariant, string> = {
-  active: "bg-[#10b981]/15 text-[#10b981] border-[#10b981]/30",
-  inactive: "bg-[#64748b]/15 text-[#64748b] border-[#64748b]/30",
-  error: "bg-[#ef4444]/15 text-[#ef4444] border-[#ef4444]/30",
-  warning: "bg-[#f59e0b]/15 text-[#f59e0b] border-[#f59e0b]/30",
-  pending: "bg-[#3b82f6]/15 text-[#3b82f6] border-[#3b82f6]/30",
+  active: "bg-[#D1FAE5] text-[#059669] border-[#A7F3D0]/50",
+  inactive: "bg-[#F3F4F6] text-[#6B7280] border-[#E5E7EB]",
+  error: "bg-[#FEE2E2] text-[#DC2626] border-[#FECACA]/50",
+  warning: "bg-[#FEF3C7] text-[#D97706] border-[#FDE68A]/50",
+  pending: "bg-[#F3F4F6] text-[#374151] border-[#E5E7EB]",
 };
 
 const STATUS_LABELS: Record<StatusVariant, string> = {
@@ -19,11 +19,11 @@ const STATUS_LABELS: Record<StatusVariant, string> = {
 };
 
 const STATUS_DOTS: Record<StatusVariant, string> = {
-  active: "bg-[#10b981]",
-  inactive: "bg-[#64748b]",
-  error: "bg-[#ef4444]",
-  warning: "bg-[#f59e0b]",
-  pending: "bg-[#3b82f6]",
+  active: "bg-[#059669]",
+  inactive: "bg-[#9CA3AF]",
+  error: "bg-[#DC2626]",
+  warning: "bg-[#D97706]",
+  pending: "bg-[#6B7280]",
 };
 
 interface StatusBadgeProps {

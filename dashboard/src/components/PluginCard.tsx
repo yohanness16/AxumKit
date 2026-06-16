@@ -9,6 +9,8 @@ interface PluginCardProps {
   description: string;
   status: "active" | "inactive" | "error";
   dependencies: string[];
+  enabled?: boolean;
+  onToggle?: () => void;
 }
 
 function ToggleSwitch({
@@ -27,8 +29,8 @@ function ToggleSwitch({
       aria-checked={enabled}
       aria-label={ariaLabel}
       onClick={onToggle}
-      className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b82f6] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--card)] ${
-        enabled ? "bg-[#10b981]" : "bg-[#475569]"
+      className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B7280] focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
+        enabled ? "bg-[#374151]" : "bg-[#D1D5DB]"
       }`}
     >
       <span
@@ -44,7 +46,7 @@ function ToggleSwitch({
 function ChevronIcon({ open }: { open: boolean }) {
   return (
     <svg
-      className={`h-4 w-4 text-[#64748b] transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+      className={`h-4 w-4 text-[#9CA3AF] transition-transform duration-200 ${open ? "rotate-180" : ""}`}
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -62,21 +64,21 @@ export default function PluginCard({
   description,
   status,
   dependencies,
+  enabled: controlledEnabled,
+  onToggle,
 }: PluginCardProps) {
-  const [enabled, setEnabled] = useState(status === "active");
+  const [internalEnabled, setInternalEnabled] = useState(status === "active");
+  const enabled = controlledEnabled ?? internalEnabled;
+  const handleToggle = onToggle ?? (() => setInternalEnabled((prev) => !prev));
   const [showDeps, setShowDeps] = useState(false);
 
-  const handleToggle = () => {
-    setEnabled((prev) => !prev);
-  };
-
   return (
-    <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 transition-colors hover:bg-[var(--card-hover)]">
+    <div className="rounded-xl border border-[#E5E7EB] bg-white p-5 transition-colors hover:border-[#D1D5DB]">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-3">
-            <h3 className="text-sm font-semibold text-[var(--foreground)]">{name}</h3>
-            <span className="text-xs text-[#64748b]">v{version}</span>
+            <h3 className="text-sm font-semibold text-[#111827]">{name}</h3>
+            <span className="text-xs text-[#9CA3AF]">v{version}</span>
           </div>
           <StatusBadge status={status as StatusVariant} className="mt-2" />
         </div>
@@ -87,14 +89,14 @@ export default function PluginCard({
         />
       </div>
 
-      <p className="mt-3 text-sm leading-relaxed text-[#94a3b8]">{description}</p>
+      <p className="mt-3 text-sm leading-relaxed text-[#6B7280]">{description}</p>
 
       {dependencies.length > 0 && (
-        <div className="mt-3 border-t border-[var(--border)] pt-3">
+        <div className="mt-3 border-t border-[#E5E7EB] pt-3">
           <button
             type="button"
             onClick={() => setShowDeps(!showDeps)}
-            className="flex items-center gap-1.5 text-xs font-medium text-[#94a3b8] transition-colors hover:text-[var(--foreground)]"
+            className="flex items-center gap-1.5 text-xs font-medium text-[#6B7280] transition-colors hover:text-[#374151]"
             aria-expanded={showDeps}
             aria-controls={`deps-${name}`}
           >
@@ -104,7 +106,7 @@ export default function PluginCard({
           {showDeps && (
             <ul
               id={`deps-${name}`}
-              className="mt-2 space-y-1 pl-5 text-xs text-[#64748b]"
+              className="mt-2 space-y-1 pl-5 text-xs text-[#9CA3AF]"
               role="list"
             >
               {dependencies.map((dep) => (

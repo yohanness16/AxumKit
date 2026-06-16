@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import StatusBadge from "@/components/StatusBadge";
+import { useDashboardStore } from "@/store/dashboard";
 
 interface MetricData {
   label: string;
@@ -11,23 +12,23 @@ interface MetricData {
 }
 
 const REQUESTS_PER_MIN: MetricData[] = [
-  { label: "00:00", value: 45, max: 100, color: "#3b82f6" },
-  { label: "04:00", value: 20, max: 100, color: "#3b82f6" },
-  { label: "08:00", value: 78, max: 100, color: "#3b82f6" },
-  { label: "12:00", value: 95, max: 100, color: "#3b82f6" },
-  { label: "16:00", value: 82, max: 100, color: "#3b82f6" },
-  { label: "20:00", value: 60, max: 100, color: "#3b82f6" },
-  { label: "Now", value: 72, max: 100, color: "#3b82f6" },
+  { label: "00:00", value: 45, max: 100, color: "#374151" },
+  { label: "04:00", value: 20, max: 100, color: "#374151" },
+  { label: "08:00", value: 78, max: 100, color: "#374151" },
+  { label: "12:00", value: 95, max: 100, color: "#374151" },
+  { label: "16:00", value: 82, max: 100, color: "#374151" },
+  { label: "20:00", value: 60, max: 100, color: "#374151" },
+  { label: "Now", value: 72, max: 100, color: "#374151" },
 ];
 
 const RESPONSE_TIME: MetricData[] = [
-  { label: "00:00", value: 120, max: 300, color: "#10b981" },
-  { label: "04:00", value: 80, max: 300, color: "#10b981" },
-  { label: "08:00", value: 250, max: 300, color: "#10b981" },
-  { label: "12:00", value: 280, max: 300, color: "#f59e0b" },
-  { label: "16:00", value: 200, max: 300, color: "#10b981" },
-  { label: "20:00", value: 150, max: 300, color: "#10b981" },
-  { label: "Now", value: 165, max: 300, color: "#10b981" },
+  { label: "00:00", value: 120, max: 300, color: "#374151" },
+  { label: "04:00", value: 80, max: 300, color: "#374151" },
+  { label: "08:00", value: 250, max: 300, color: "#374151" },
+  { label: "12:00", value: 280, max: 300, color: "#D97706" },
+  { label: "16:00", value: 200, max: 300, color: "#374151" },
+  { label: "20:00", value: 150, max: 300, color: "#374151" },
+  { label: "Now", value: 165, max: 300, color: "#374151" },
 ];
 
 interface LogEntry {
@@ -62,46 +63,46 @@ function MetricCard({
   trend?: "up" | "down" | "stable";
 }) {
   return (
-    <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-4">
-      <p className="text-xs font-medium uppercase tracking-wider text-[#64748b]">{title}</p>
+    <div className="rounded-xl border border-[#E5E7EB] bg-white p-4">
+      <p className="text-xs font-medium uppercase tracking-wider text-[#6B7280]">{title}</p>
       <div className="mt-2 flex items-baseline gap-2">
-        <span className="text-2xl font-bold text-[var(--foreground)]">{value}</span>
+        <span className="text-2xl font-bold text-[#111827]">{value}</span>
         {trend && (
           <span
             className={`text-xs font-medium ${
-              trend === "up" ? "text-[#10b981]" : trend === "down" ? "text-[#ef4444]" : "text-[#64748b]"
+              trend === "up" ? "text-[#059669]" : trend === "down" ? "text-[#DC2626]" : "text-[#6B7280]"
             }`}
           >
             {trend === "up" ? "+" : trend === "down" ? "-" : "~"}
           </span>
         )}
       </div>
-      <p className="mt-1 text-xs text-[#64748b]">{subtitle}</p>
+      <p className="mt-1 text-xs text-[#6B7280]">{subtitle}</p>
     </div>
   );
 }
 
 function BarChart({ data, title, unit }: { data: MetricData[]; title: string; unit: string }) {
   return (
-    <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5">
+    <div className="rounded-xl border border-[#E5E7EB] bg-white p-5">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-[var(--foreground)]">{title}</h3>
-        <span className="text-xs text-[#64748b]">Last 24 hours</span>
+        <h3 className="text-sm font-semibold text-[#111827]">{title}</h3>
+        <span className="text-xs text-[#6B7280]">Last 24 hours</span>
       </div>
       <div className="flex items-end gap-3" style={{ height: 140 }} role="img" aria-label={`${title} bar chart`}>
         {data.map((bar) => {
           const heightPct = Math.max((bar.value / bar.max) * 100, 4);
           return (
             <div key={bar.label} className="flex flex-1 flex-col items-center gap-1.5">
-              <span className="text-xs text-[#94a3b8]">{bar.value}{unit}</span>
-              <div className="relative w-full overflow-hidden rounded-t bg-[var(--border)]" style={{ height: 100 }}>
+              <span className="text-xs text-[#9CA3AF]">{bar.value}{unit}</span>
+              <div className="relative w-full overflow-hidden rounded-t bg-[#E5E7EB]" style={{ height: 100 }}>
                 <div
                   className="absolute bottom-0 w-full rounded-t transition-all duration-500"
                   style={{ height: `${heightPct}%`, backgroundColor: bar.color, opacity: 0.8 }}
                   aria-hidden="true"
                 />
               </div>
-              <span className="text-xs text-[#64748b]">{bar.label}</span>
+              <span className="text-xs text-[#6B7280]">{bar.label}</span>
             </div>
           );
         })}
@@ -121,10 +122,10 @@ function LineChart({ data, title }: { data: MetricData[]; title: string }) {
   }).join(" ");
 
   return (
-    <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5">
+    <div className="rounded-xl border border-[#E5E7EB] bg-white p-5">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-[var(--foreground)]">{title}</h3>
-        <span className="text-xs text-[#64748b]">ms</span>
+        <h3 className="text-sm font-semibold text-[#111827]">{title}</h3>
+        <span className="text-xs text-[#6B7280]">ms</span>
       </div>
       <svg viewBox={`0 0 ${width} ${height}`} className="h-36 w-full" role="img" aria-label={`${title} line chart`}>
         {/* Grid lines */}
@@ -135,7 +136,7 @@ function LineChart({ data, title }: { data: MetricData[]; title: string }) {
             y1={(pct / 100) * height}
             x2={width}
             y2={(pct / 100) * height}
-            stroke="#334155"
+            stroke="#E5E7EB"
             strokeWidth={0.3}
             strokeDasharray="2,2"
           />
@@ -144,7 +145,7 @@ function LineChart({ data, title }: { data: MetricData[]; title: string }) {
         <polyline
           points={points}
           fill="none"
-          stroke="#10b981"
+          stroke="#374151"
           strokeWidth={1.5}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -157,12 +158,12 @@ function LineChart({ data, title }: { data: MetricData[]; title: string }) {
         />
         <defs>
           <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#10b981" />
-            <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
+            <stop offset="0%" stopColor="#374151" />
+            <stop offset="100%" stopColor="#374151" stopOpacity={0} />
           </linearGradient>
         </defs>
       </svg>
-      <div className="mt-2 flex justify-between text-xs text-[#64748b]">
+      <div className="mt-2 flex justify-between text-xs text-[#6B7280]">
         <span>00:00</span>
         <span>12:00</span>
         <span>Now</span>
@@ -171,18 +172,24 @@ function LineChart({ data, title }: { data: MetricData[]; title: string }) {
   );
 }
 
+function getHealthColor(value: number): string {
+  if (value >= 70) return "#D97706";
+  return "#374151";
+}
+
 export default function MonitoringPage() {
   const [logFilter, setLogFilter] = useState<"all" | "info" | "warn" | "error">("all");
+  const logs = useDashboardStore((state) => state.logs);
 
   const filteredLogs =
     logFilter === "all" ? RECENT_LOGS : RECENT_LOGS.filter((l) => l.level === logFilter);
 
   return (
-    <div className="min-h-screen p-6 lg:p-8">
+    <div className="min-h-screen bg-[#F9FAFB] p-6 lg:p-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[var(--foreground)]">Monitoring</h1>
-        <p className="mt-1 text-sm text-[#64748b]">
+        <h1 className="text-2xl font-bold text-[#111827]">Monitoring</h1>
+        <p className="mt-1 text-sm text-[#6B7280]">
           Real-time server metrics, performance charts, and recent request logs.
         </p>
       </div>
@@ -223,55 +230,55 @@ export default function MonitoringPage() {
 
       {/* System Health Indicators */}
       <section className="mb-8" aria-label="System health indicators">
-        <h2 className="mb-4 text-lg font-semibold text-[var(--foreground)]">System Health</h2>
+        <h2 className="mb-4 text-lg font-semibold text-[#111827]">System Health</h2>
         <div className="grid gap-4 sm:grid-cols-3">
           {/* CPU */}
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5">
+          <div className="rounded-xl border border-[#E5E7EB] bg-white p-5">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-[#94a3b8]">CPU Usage</span>
+              <span className="text-sm font-medium text-[#6B7280]">CPU Usage</span>
               <StatusBadge status="active" />
             </div>
             <div className="mt-3">
               <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-bold text-[var(--foreground)]">42</span>
-                <span className="text-sm text-[#64748b]">%</span>
+                <span className="text-2xl font-bold text-[#111827]">42</span>
+                <span className="text-sm text-[#6B7280]">%</span>
               </div>
-              <div className="mt-2 h-2 overflow-hidden rounded-full bg-[var(--border)]">
-                <div className="h-full rounded-full bg-[#10b981]" style={{ width: "42%" }} aria-hidden="true" />
+              <div className="mt-2 h-2 overflow-hidden rounded-full bg-[#E5E7EB]">
+                <div className="h-full rounded-full" style={{ width: "42%", backgroundColor: getHealthColor(42) }} aria-hidden="true" />
               </div>
             </div>
           </div>
 
           {/* Memory */}
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5">
+          <div className="rounded-xl border border-[#E5E7EB] bg-white p-5">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-[#94a3b8]">Memory</span>
+              <span className="text-sm font-medium text-[#6B7280]">Memory</span>
               <StatusBadge status="warning" />
             </div>
             <div className="mt-3">
               <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-bold text-[var(--foreground)]">78</span>
-                <span className="text-sm text-[#64748b]">%</span>
+                <span className="text-2xl font-bold text-[#111827]">78</span>
+                <span className="text-sm text-[#6B7280]">%</span>
               </div>
-              <div className="mt-2 h-2 overflow-hidden rounded-full bg-[var(--border)]">
-                <div className="h-full rounded-full bg-[#f59e0b]" style={{ width: "78%" }} aria-hidden="true" />
+              <div className="mt-2 h-2 overflow-hidden rounded-full bg-[#E5E7EB]">
+                <div className="h-full rounded-full" style={{ width: "78%", backgroundColor: getHealthColor(78) }} aria-hidden="true" />
               </div>
             </div>
           </div>
 
           {/* Disk */}
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5">
+          <div className="rounded-xl border border-[#E5E7EB] bg-white p-5">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-[#94a3b8]">Disk I/O</span>
+              <span className="text-sm font-medium text-[#6B7280]">Disk I/O</span>
               <StatusBadge status="active" />
             </div>
             <div className="mt-3">
               <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-bold text-[var(--foreground)]">23</span>
-                <span className="text-sm text-[#64748b]">%</span>
+                <span className="text-2xl font-bold text-[#111827]">23</span>
+                <span className="text-sm text-[#6B7280]">%</span>
               </div>
-              <div className="mt-2 h-2 overflow-hidden rounded-full bg-[var(--border)]">
-                <div className="h-full rounded-full bg-[#10b981]" style={{ width: "23%" }} aria-hidden="true" />
+              <div className="mt-2 h-2 overflow-hidden rounded-full bg-[#E5E7EB]">
+                <div className="h-full rounded-full" style={{ width: "23%", backgroundColor: getHealthColor(23) }} aria-hidden="true" />
               </div>
             </div>
           </div>
@@ -281,17 +288,17 @@ export default function MonitoringPage() {
       {/* Recent Logs */}
       <section aria-label="Recent logs">
         <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-lg font-semibold text-[var(--foreground)]">Recent Logs</h2>
+          <h2 className="text-lg font-semibold text-[#111827]">Recent Logs</h2>
           <div className="flex gap-2" role="group" aria-label="Filter logs by level">
             {(["all", "info", "warn", "error"] as const).map((level) => (
               <button
                 key={level}
                 type="button"
                 onClick={() => setLogFilter(level)}
-                className={`rounded-lg px-3 py-1.5 text-xs font-medium capitalize transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b82f6] ${
+                className={`rounded-lg px-3 py-1.5 text-xs font-medium capitalize transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#374151] ${
                   logFilter === level
-                    ? "bg-[#3b82f6]/15 text-[#3b82f6]"
-                    : "text-[#64748b] hover:bg-[var(--card-hover)] hover:text-[var(--foreground)]"
+                    ? "bg-[#374151]/10 text-[#374151]"
+                    : "text-[#6B7280] hover:text-[#374151]"
                 }`}
                 aria-pressed={logFilter === level}
               >
@@ -300,10 +307,10 @@ export default function MonitoringPage() {
             ))}
           </div>
         </div>
-        <div className="overflow-x-auto rounded-lg border border-[var(--border)] bg-[var(--card)]">
+        <div className="overflow-x-auto rounded-xl border border-[#E5E7EB] bg-white">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-[var(--border)] text-xs uppercase tracking-wider text-[#64748b]">
+              <tr className="border-b border-[#E5E7EB] text-xs uppercase tracking-wider text-[#6B7280]">
                 <th className="px-5 py-3 font-medium" scope="col">Time</th>
                 <th className="px-5 py-3 font-medium" scope="col">Level</th>
                 <th className="px-5 py-3 font-medium" scope="col">Method</th>
@@ -312,45 +319,45 @@ export default function MonitoringPage() {
                 <th className="px-5 py-3 font-medium" scope="col">Duration</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[var(--border)]">
+            <tbody className="divide-y divide-[#E5E7EB]">
               {filteredLogs.map((log, index) => (
-                <tr key={index} className="transition-colors hover:bg-[var(--card-hover)]">
-                  <td className="px-5 py-2.5 font-mono text-xs text-[#64748b]">{log.timestamp}</td>
+                <tr key={index} className="transition-colors hover:bg-[#F9FAFB]">
+                  <td className="px-5 py-2.5 font-mono text-xs text-[#9CA3AF]">{log.timestamp}</td>
                   <td className="px-5 py-2.5">
                     <span
                       className={`inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-xs font-medium capitalize ${
                         log.level === "error"
-                          ? "bg-[#ef4444]/15 text-[#ef4444]"
+                          ? "bg-[#FEE2E2] text-[#DC2626]"
                           : log.level === "warn"
-                          ? "bg-[#f59e0b]/15 text-[#f59e0b]"
-                          : "bg-[#3b82f6]/15 text-[#3b82f6]"
+                          ? "bg-[#FEF3C7] text-[#D97706]"
+                          : "bg-[#F3F4F6] text-[#374151]"
                       }`}
                     >
                       {log.level}
                     </span>
                   </td>
                   <td className="px-5 py-2.5">
-                    <span className="rounded bg-[var(--border)] px-1.5 py-0.5 font-mono text-xs text-[var(--foreground)]">
+                    <span className="rounded bg-[#F3F4F6] px-1.5 py-0.5 font-mono text-xs text-[#111827]">
                       {log.method}
                     </span>
                   </td>
-                  <td className="px-5 py-2.5 font-mono text-xs text-[#94a3b8]">{log.path}</td>
+                  <td className="px-5 py-2.5 font-mono text-xs text-[#6B7280]">{log.path}</td>
                   <td className="px-5 py-2.5">
                     <span
                       className={`font-mono text-xs font-medium ${
                         log.status >= 500
-                          ? "text-[#ef4444]"
+                          ? "text-[#DC2626]"
                           : log.status >= 400
-                          ? "text-[#f59e0b]"
+                          ? "text-[#D97706]"
                           : log.status >= 300
-                          ? "text-[#3b82f6]"
-                          : "text-[#10b981]"
+                          ? "text-[#6B7280]"
+                          : "text-[#059669]"
                       }`}
                     >
                       {log.status}
                     </span>
                   </td>
-                  <td className="px-5 py-2.5 font-mono text-xs text-[#64748b]">{log.duration}</td>
+                  <td className="px-5 py-2.5 font-mono text-xs text-[#9CA3AF]">{log.duration}</td>
                 </tr>
               ))}
             </tbody>
