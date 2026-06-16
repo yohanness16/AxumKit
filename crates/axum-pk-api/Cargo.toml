@@ -6,12 +6,16 @@ rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 authors.workspace = true
-description = "axum-pk-api — part of AXUMkit"
+description = "axum-pk-api — API utilities plugin for AXUMkit"
 
 [dependencies]
 axum-pk-core = { path = "../axum-pk-core" }
 async-trait.workspace = true
 serde.workspace = true
+serde_json.workspace = true
+serde_qs = "0.14"
 thiserror.workspace = true
 tokio.workspace = true
 tracing.workspace = true
+axum.workspace = true
+validator.workspace = true
