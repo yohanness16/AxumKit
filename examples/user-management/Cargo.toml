@@ -1,0 +1,10 @@
+[package]
+name = "user-management"
+version.workspace = true
+edition.workspace = true
+description = "User management example with AXUMkit"
+
+[dependencies]
+axum-pk = { path = "../../crates/axum-pk" }
+tokio.workspace = true
+serde.workspace = true
