@@ -2,9 +2,16 @@
 name = "user-management"
 version.workspace = true
 edition.workspace = true
-description = "User management example with AXUMkit"
+description = "User management example with AXUMkit — full CRUD + auth"
 
 [dependencies]
-axum-pk = { path = "../../crates/axum-pk" }
+axum-pk = { path = "../../crates/axum-pk", features = ["full"] }
 tokio.workspace = true
 serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+axum.workspace = true
+tower-http.workspace = true
