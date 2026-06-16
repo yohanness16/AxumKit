@@ -8,6 +8,11 @@ repository.workspace = true
 authors.workspace = true
 description = "axum-pk-db — part of AXUMkit"
 
+[features]
+default = ["sqlx"]
+sqlx = ["dep:sqlx"]
+deadpool = ["dep:deadpool"]
+
 [dependencies]
 axum-pk-core = { path = "../axum-pk-core" }
 async-trait.workspace = true
@@ -15,3 +20,7 @@ serde.workspace = true
 thiserror.workspace = true
 tokio.workspace = true
 tracing.workspace = true
+sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "postgres", "sqlite", "chrono", "uuid"], optional = true }
+deadpool = { version = "0.12", optional = true }
+chrono.workspace = true
+uuid.workspace = true
