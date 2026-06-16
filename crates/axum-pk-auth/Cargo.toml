@@ -10,8 +10,16 @@ description = "axum-pk-auth — part of AXUMkit"
 
 [dependencies]
 axum-pk-core = { path = "../axum-pk-core" }
+axum.workspace = true
 async-trait.workspace = true
 serde.workspace = true
+serde_json.workspace = true
 thiserror.workspace = true
 tokio.workspace = true
 tracing.workspace = true
+jsonwebtoken = "9"
+argon2 = "0.5"
+rand = "0.8"
+axum-extra = { version = "0.10", features = ["typed-header"] }
+chrono.workspace = true
+uuid.workspace = true
