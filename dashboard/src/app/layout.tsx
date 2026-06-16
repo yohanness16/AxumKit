@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "AXUMkit Dashboard",
-  description: "AXUMkit — Modular Rust Backend Framework Admin Dashboard",
+  description: "AXUMkit — Visual Builder for Rust Backend Framework",
 };
 
 export default function RootLayout({
